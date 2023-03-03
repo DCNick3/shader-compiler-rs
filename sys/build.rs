@@ -23,7 +23,12 @@ fn collect_cpp_files(path: &Path) -> impl Iterator<Item = PathBuf> {
         .map(|v| v.unwrap())
         .filter(|v| v.file_type().is_file())
         .map(|v| v.path().to_path_buf())
-        .filter(|p| p.extension() == Some("cpp".as_ref()))
+        .filter(|p| {
+            matches!(
+                p.extension().map(|v| v.to_str().unwrap()),
+                Some("cpp" | "cc" | "cxx")
+            )
+        })
 }
 
 fn build_sirit() {
@@ -31,9 +36,11 @@ fn build_sirit() {
 
     build
         .cpp(true)
+        .define("FMT_HEADER_ONLY", None)
         .include(vendor_dir().join("sirit/externals/SPIRV-Headers/include"))
         .include(vendor_dir().join("sirit/include"))
         .include(vendor_dir().join("sirit/src"))
+        .include(vendor_dir().join("fmt/include"))
         .files(collect_cpp_files(&vendor_dir().join("sirit/src")));
 
     if build.get_compiler().is_like_msvc() {
@@ -50,9 +57,11 @@ fn build_shader_compiler() {
 
     build
         .cpp(true)
+        .define("FMT_HEADER_ONLY", None)
         .include(vendor_dir().join("range-v3/include"))
         .include(vendor_dir().join("sirit/externals/SPIRV-Headers/include"))
         .include(vendor_dir().join("sirit/include"))
+        .include(vendor_dir().join("fmt/include"))
         .include(vendor_dir()) // to make sure shader_compiler is on include path
         .files(collect_cpp_files(&vendor_dir().join("shader_compiler")));
 
@@ -73,6 +82,7 @@ fn build_shader_compiler() {
 }
 
 fn main() {
+    // no need to build fmt, as we are using it in header-only mode
     build_sirit();
     build_shader_compiler();
 
