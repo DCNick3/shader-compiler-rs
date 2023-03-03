@@ -2,6 +2,7 @@
 
 [workspace]
 members = [
+    "cli",
     "bridge",
     "sys",
 ]

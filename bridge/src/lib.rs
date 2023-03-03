@@ -10,12 +10,6 @@ mod ffi {
     unsafe extern "C++" {
         include!("shader-compiler-bridge/src/bridge.hpp");
         include!(<shader_compiler/environment.h>);
-
-        /// Translates a binary maxwell shader into a SPIR-V shader
-        ///
-        /// Expects the shader to start with the [Shader Program Header]
-        ///
-        /// [Shader Program Header] https://download.nvidia.com/open-gpu-doc/Shader-Program-Header/1/Shader-Program-Header.html
         fn translate_shader(shader: Vec<u8>) -> Vec<u32>;
     }
 }
@@ -33,4 +27,13 @@ fn log_error(message: &CxxString) {
 }
 
 use cxx::CxxString;
-pub use ffi::translate_shader;
+
+/// Translates a binary maxwell shader into a SPIR-V shader
+///
+/// Expects the shader to start with the [Shader Program Header]
+///
+/// [Shader Program Header] https://download.nvidia.com/open-gpu-doc/Shader-Program-Header/1/Shader-Program-Header.html
+#[tracing::instrument(skip_all)]
+pub fn translate_shader(shader: Vec<u8>) -> Vec<u32> {
+    ffi::translate_shader(shader)
+}

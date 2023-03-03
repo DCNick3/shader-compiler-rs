@@ -1,0 +1,12 @@
+[package]
+name = "shader-compiler-cli"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+shader-compiler-bridge = { path = "../bridge" }
+#naga = { version = "0.11.0", features = ["spv-in", "glsl-out"] }
+spirv_cross = { version = "0.23.1", features = ["glsl"] }
+byte-slice-cast = "1.2.2"
