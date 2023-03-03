@@ -25,5 +25,6 @@ fn main() {
 
     println!("cargo:rerun-if-changed=src/lib.rs");
     println!("cargo:rerun-if-changed=src/bridge.cc");
+    println!("cargo:rerun-if-changed=src/bridge.hpp");
     println!("cargo:rerun-if-changed={}", vendor_dir().to_str().unwrap());
 }
