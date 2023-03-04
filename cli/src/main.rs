@@ -66,7 +66,7 @@ fn main() {
 
     let mut options = spirv_cross::glsl::CompilerOptions::default();
     options.version = spirv_cross::glsl::Version::V3_30;
-    options.emit_uniform_buffer_as_plain_uniforms = true;
+    options.vulkan_semantics = true;
 
     ast.set_compiler_options(&options)
         .expect("Failed to set compiler options");
