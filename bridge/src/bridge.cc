@@ -41,7 +41,7 @@ namespace Bridge {
         )
                 : binary{std::move(pBinary)}, baseOffset{baseOffset},
                 textureBufferIndex{0},
-                viewportTransformEnabled{false}
+                viewportTransformEnabled{true}
 //                constantBufferRead{std::move(constantBufferRead)}, getTextureType{std::move(getTextureType)}
         {
             stage = pStage;
@@ -226,7 +226,12 @@ namespace Bridge {
             .gl_max_compute_smem_size = 0,
         };
 
-        auto spirv = Shader::Backend::SPIRV::EmitSPIRV(profile, program);
+        Shader::Backend::Bindings binding;
+        Shader::RuntimeInfo runtime_info;
+
+        runtime_info.previous_stage_stores.mask.set();
+
+        auto spirv = Shader::Backend::SPIRV::EmitSPIRV(profile, runtime_info, program, binding);
 
         rust::Vec<u32> result;
         result.reserve(spirv.size());

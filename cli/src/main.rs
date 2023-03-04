@@ -56,8 +56,8 @@ fn main() {
     let shader = &shader[0x30..];
 
     let spirv = shader_compiler_bridge::translate_shader(shader.to_vec());
-    let spirv_bytes = spirv.as_byte_slice();
 
+    // let spirv_bytes = spirv.as_byte_slice();
     // std::fs::write("shader.spv", spirv_bytes).unwrap();
 
     let module = spirv_cross::spirv::Module::from_words(&spirv);
@@ -65,7 +65,7 @@ fn main() {
         .expect("Failed to parse SPIR-V");
 
     let mut options = spirv_cross::glsl::CompilerOptions::default();
-    options.version = spirv_cross::glsl::Version::V3_30;
+    options.version = spirv_cross::glsl::Version::V4_50;
     options.vulkan_semantics = true;
 
     ast.set_compiler_options(&options)
