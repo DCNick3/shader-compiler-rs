@@ -7,6 +7,6 @@ edition = "2021"
 
 [dependencies]
 shader-compiler-bridge = { path = "../bridge" }
-#naga = { version = "0.11.0", features = ["spv-in", "glsl-out"] }
 spirv_cross = { version = "0.23.1", features = ["glsl"] }
+clap = { version = "4.1.8", features = ["derive"] }
 byte-slice-cast = "1.2.2"

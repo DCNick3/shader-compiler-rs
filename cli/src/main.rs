@@ -35,18 +35,30 @@
 */
 
 use byte_slice_cast::AsByteSlice;
+use clap::Parser;
+use std::path::PathBuf;
+
+#[derive(clap::Parser)]
+struct Args {
+    /// Path to the input binary maxwell shader
+    ///
+    /// Expects a 0x30-byte header before the SPH
+    input: PathBuf,
+    /// Path to the output GLSL shader
+    output: PathBuf,
+}
 
 fn main() {
-    let shader_path = std::env::args().nth(1).unwrap();
+    let args = Args::parse();
 
-    let shader = std::fs::read(shader_path).unwrap();
+    let shader = std::fs::read(args.input).unwrap();
     // skip the 0x30-bytes header before the SPH
     let shader = &shader[0x30..];
 
     let spirv = shader_compiler_bridge::translate_shader(shader.to_vec());
     let spirv_bytes = spirv.as_byte_slice();
 
-    std::fs::write("shader.spv", spirv_bytes).unwrap();
+    // std::fs::write("shader.spv", spirv_bytes).unwrap();
 
     let module = spirv_cross::spirv::Module::from_words(&spirv);
     let mut ast = spirv_cross::spirv::Ast::<spirv_cross::glsl::Target>::parse(&module)
@@ -61,5 +73,5 @@ fn main() {
 
     let glsl = ast.compile().expect("Failed to compile GLSL");
 
-    println!("{}", glsl);
+    std::fs::write(args.output, glsl).unwrap();
 }
