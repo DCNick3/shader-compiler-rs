@@ -19,7 +19,7 @@ Usage:
 shader-compiler-rs shader.bin shader.glsl
 ```
 
-`shader.bin` is the data part of the shader you pass to NVN. Note, that, unlike the Ryujinx shader compiler, this tool accepts shaders with the 0x30-bytes NVN-specific header before the [SPH](https://download.nvidia.com/open-gpu-doc/Shader-Program-Header/1/Shader-Program-Header.html).
+`shader.bin` is the data part of the shader you pass to NVN. Note, that, unlike the [Ryujinx ShaderTools](https://github.com/Ryujinx/Ryujinx/tree/master/Ryujinx.ShaderTools), this tool accepts shaders with the 0x30-bytes NVN-specific header before the [SPH](https://download.nvidia.com/open-gpu-doc/Shader-Program-Header/1/Shader-Program-Header.html).
 
 `shader.glsl` is the output file. It will be overwritten if it already exists.
 
