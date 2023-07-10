@@ -16,7 +16,7 @@ cargo install --path cli
 Usage: 
 
 ```bash
-shader-compiler-rs shader.bin shader.glsl
+shader-compiler-cli shader.bin shader.glsl
 ```
 
 `shader.bin` is the data part of the shader you pass to NVN. Note, that, unlike the [Ryujinx ShaderTools](https://github.com/Ryujinx/Ryujinx/tree/master/Ryujinx.ShaderTools), this tool accepts shaders with the 0x30-bytes NVN-specific header before the [SPH](https://download.nvidia.com/open-gpu-doc/Shader-Program-Header/1/Shader-Program-Header.html).
