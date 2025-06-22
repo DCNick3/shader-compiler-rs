@@ -41,7 +41,8 @@ fn build_sirit() {
         .include(vendor_dir().join("sirit/include"))
         .include(vendor_dir().join("sirit/src"))
         .include(vendor_dir().join("fmt/include"))
-        .files(collect_cpp_files(&vendor_dir().join("sirit/src")));
+        .files(collect_cpp_files(&vendor_dir().join("sirit/src")))
+        .flag("-mno-ms-bitfields"); // this is needed to make MinGW build succeed
 
     if build.get_compiler().is_like_msvc() {
         build.flag("/std:c++20");
@@ -70,7 +71,8 @@ fn build_shader_compiler() {
         .include(vendor_dir().join("boost/intrusive/include"))
         .include(vendor_dir().join("boost/container/include"))
         .include(vendor_dir()) // to make sure shader_compiler is on include path
-        .files(collect_cpp_files(&vendor_dir().join("shader_compiler")));
+        .files(collect_cpp_files(&vendor_dir().join("shader_compiler")))
+        .flag("-mno-ms-bitfields"); // this is needed to make MinGW build succeed
 
     if build.get_compiler().is_like_msvc() {
         build.flag("/std:c++20");
