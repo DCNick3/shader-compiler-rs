@@ -5,15 +5,23 @@ A thin wrapper around the Hades - Yuzu Shader Recompiler, which allows to recomp
 
 ## Installation & Usage
 
-This was only tested on Linux. Needs a system-wide Boost installation.
+Building requires a GCC compiler, even on windows.
 
-Install with:
+On linux you can install with:
 
 ```bash
-sudo apt install libboost-dev
-
 git clone https://github.com/DCNick3/shader-compiler-rs
 cd shader-compiler-rs
+cargo install --path cli
+```
+
+On windows you need to get mingw-w64's GCC compiler. Then, in an environment with `gcc` available, you can build it with:
+
+```bash
+git clone https://github.com/DCNick3/shader-compiler-rs
+cd shader-compiler-rs
+export CC=gcc
+export CXX=g++
 cargo install --path cli
 ```
 
