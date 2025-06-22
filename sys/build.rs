@@ -62,6 +62,13 @@ fn build_shader_compiler() {
         .include(vendor_dir().join("sirit/externals/SPIRV-Headers/include"))
         .include(vendor_dir().join("sirit/include"))
         .include(vendor_dir().join("fmt/include"))
+        
+        // technically boost container has some .cpp files for us to compile, but the recompiler works without them, so :shrug:
+        .include(vendor_dir().join("boost/config/include"))
+        .include(vendor_dir().join("boost/assert/include"))
+        .include(vendor_dir().join("boost/move/include"))
+        .include(vendor_dir().join("boost/intrusive/include"))
+        .include(vendor_dir().join("boost/container/include"))
         .include(vendor_dir()) // to make sure shader_compiler is on include path
         .files(collect_cpp_files(&vendor_dir().join("shader_compiler")));
 
