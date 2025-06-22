@@ -20,6 +20,7 @@ fn main() {
         .include(vendor_dir().join("range-v3/include"))
         .include(vendor_dir().join("sirit/externals/SPIRV-Headers/include"))
         .include(vendor_dir().join("sirit/include"))
+        .include(vendor_dir().join("fmt/include"))
         .include(vendor_dir()) // to make sure shader_compiler is on include path
         .compile("shader-compiler-bridge");
 
